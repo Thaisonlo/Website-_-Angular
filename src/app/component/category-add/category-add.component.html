@@ -1,0 +1,35 @@
+<!-- Single Page Header start -->
+<div class="container-fluid page-header py-5">
+    <h1 class="text-center text-white display-6">Chi tiết Cửa hàng</h1>
+    <ol class="breadcrumb justify-content-center mb-0">
+      <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+      <li class="breadcrumb-item"><a href="#">Trang</a></li>
+      <li class="breadcrumb-item active text-white">Chi tiết Cửa hàng</li>
+    </ol>
+  </div>
+  <!-- Single Page Header End -->
+  
+  
+      <form (ngSubmit)="onSubmit()" [formGroup]="categoryForm">
+        <div class="card">
+          <div class="card-header">
+            Thêm danh mục mới
+          </div>
+          <div class="card-body">
+            <div class="form-group">
+              <input type="text" name="name" id="name" formControlName="name" class="form-control" placeholder="Tên danh mục" aria-describedby="nameHelpId">
+
+  
+              <small *ngIf="!categoryForm.get('name')?.valid && categoryForm.get('name')?.touched" id="nameHelpId"
+                class="text-muted">
+                Độ dài hơn 3 kí tự
+              </small>
+            </div>
+            <label for="fileInput1">Upload Image</label>
+              <input id="fileInput1" name="img" class="form-control-file" type="file" (change)="onFileSelected($event)" />
+            <div class="form-group"><hr>
+              <button class="btn btn-primary">Thêm</button>
+            </div>
+          </div>
+        </div>
+      </form>

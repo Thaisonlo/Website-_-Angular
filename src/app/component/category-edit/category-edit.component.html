@@ -1,0 +1,121 @@
+<div class="row">
+  <div class="col-md-2 bg-dark text-white p-4">
+    <h3 class="text-center">
+      <span class="text-danger">HPL</span><span>SHOP</span>
+    </h3>
+    <hr />
+    <p>
+      <i class="bi bi-pie-chart-fill me-2"></i
+      ><a class="text-decoration-none text-white" href="/statistic">
+        Quản lý thống kê</a
+      >
+    </p>
+    <p>
+      <i class="bi bi-tag-fill me-2"></i
+      ><a class="text-decoration-none text-white" href="/category">
+        Quản lý danh mục</a
+      >
+    </p>
+    <p>
+      <i class="bi bi-box-seam me-2"></i
+      ><a class="text-decoration-none text-white" href="/product">
+        Quản lý sản phẩm</a
+      >
+    </p>
+    <p>
+      <i class="bi bi-people-fill me-2"></i
+      ><a class="text-decoration-none text-white" href="/user">
+        Quản lý người dùng</a
+      >
+    </p>
+    <p>
+      <i class="bi bi-cart-fill me-2"></i
+      ><a class="text-decoration-none text-white" href="/order">
+        Quản lý đơn hàng</a
+      >
+    </p>
+    <p>
+      <i class="bi bi-chat-left-text-fill me-2"></i
+      ><a class="text-decoration-none text-white" href="/feedback">
+        Quản lý bình luận</a
+      >
+    </p>
+    <hr />
+    <div class="text-center">
+      <a href="" class="btn btn-danger">Đăng xuất</a>
+    </div>
+  </div>
+  <div class="col-md-10 p-0">
+    <div
+      class="shadow bg-danger text-white d-flex justify-content-between align-content-center p-3 pb-1"
+    >
+      <p>TRANG QUẢN TRỊ WEBSITE HPLSHOP</p>
+      <div>
+        <span>Admin</span
+        ><img
+          class="rounded m-1 border border-1 border-white"
+          width="30px"
+          height="30px"
+          src="https://lh3.googleusercontent.com/a/AAcHTtdsW-6i09Wa-XNKWjkAjv7vrId4EIbE5Ggj3W_rA6_-18Q=s576-c-no"
+          alt=""
+        />
+      </div>
+    </div>
+    <div class="row p-5">
+      <form [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
+        <div class="card">
+          <div class="card-header">Sửa danh mục</div>
+          <div class="card-body">
+            <div class="form-group">
+              <label for="id">Id</label>
+              <input
+                type="text"
+                id="id"
+                formControlName="id"
+                readonly
+                class="form-control"
+                placeholder="Id"
+                redonly
+              />
+              <small
+                *ngIf="
+                  categoryForm.get('id')?.invalid &&
+                  categoryForm.get('id')?.touched
+                "
+                class="text-muted"
+              >
+                Id is required
+              </small>
+            </div>
+            <br />
+            <div class="form-group">
+              <label for="name">Tên danh mục</label>
+              <input
+                type="text"
+                id="name"
+                formControlName="name"
+                class="form-control"
+                placeholder="Tên danh mục"
+              />
+              <small
+                *ngIf="
+                  categoryForm.get('name')?.invalid &&
+                  categoryForm.get('name')?.touched
+                "
+                class="text-muted"
+              >
+                Category name is required and at least 3 characters
+              </small>
+            </div>
+            <hr />
+            <label for="fileInput1">Upload Image</label>
+            <input id="fileInput1" name="img" class="form-control-file" type="file" (change)="onFileSelected($event)" />
+            <div class="form-group">
+              <button class="btn btn-primary" type="submit">Cập nhật</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

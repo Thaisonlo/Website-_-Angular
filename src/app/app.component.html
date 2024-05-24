@@ -1,0 +1,54 @@
+<!-- Page Preloder -->
+    <div id="preloder">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Offcanvas Menu Begin -->
+    <div class="offcanvas-menu-overlay"></div>
+    <div class="offcanvas-menu-wrapper">
+        <div class="offcanvas__option">
+            <div class="offcanvas__links">
+                <a [routerLink]="['/login']" routerLinkActive="router-link-active"  href="#">Đăng nhập</a>
+                <a href="#">Hỏi đáp</a>
+            </div>
+            <div class="offcanvas__top__hover">
+                <span>Vnd <i class="arrow_carrot-down"></i></span>
+                <ul>
+                    <li>VND</li>
+                    <li>EUR</li>
+                    <li>USD</li>
+                </ul>
+            </div>
+        </div>
+        <div class="offcanvas__nav__option">
+            <a href="#" class="search-switch"><img src="./assets/img/icon/search.png" alt=""></a>
+            <a href="#"><img src="./assets/img/icon/heart.png" alt=""></a>
+            <a href="#"><img src="./assets/img/icon/cart.png" alt=""> <span>0</span></a>
+            <div class="price">0.00VND</div>
+        </div>
+        <div id="mobile-menu-wrap"></div>
+        <div class="offcanvas__text">
+            <p>Giao hàng miễn phí, đảm bảo hoàn trả hoặc hoàn tiền trong 30 ngày.</p>
+        </div>
+    </div>
+    <!-- Offcanvas Menu End -->
+
+    <!--Header-->
+    <app-header></app-header>
+
+    <!--RouterLink-->
+    <router-outlet></router-outlet>
+
+    <!--Footer-->
+    <app-footer></app-footer>
+
+    <!-- Search Begin -->
+    <div class="search-model">
+        <div class="h-100 d-flex align-items-center justify-content-center">
+            <div class="search-close-switch">+</div>
+            <form class="search-model-form">
+                <input type="text" id="search-input" placeholder="Tìm kiếm tại đây.....">
+            </form>
+        </div>
+    </div>
+    <!-- Search End -->

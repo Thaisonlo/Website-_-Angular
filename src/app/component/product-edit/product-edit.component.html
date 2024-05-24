@@ -1,0 +1,74 @@
+<div class="row">
+  <div class="col-md-2 bg-dark text-white p-4">
+    <h3 class="text-center"><span class="text-danger">Fashion</span><span>SHOP</span></h3>
+    <hr>
+    <p><i class="bi bi-pie-chart-fill me-2"></i><a class="text-decoration-none text-white" href="/statistic"> Quản lý thống kê</a></p>
+    <p><i class="bi bi-tag-fill me-2"></i><a class="text-decoration-none text-white" href="/category"> Quản lý danh mục</a></p>
+    <p><i class="bi bi-box-seam me-2"></i><a class="text-decoration-none text-white" href="/product"> Quản lý sản phẩm</a></p>
+    <p><i class="bi bi-people-fill me-2"></i><a class="text-decoration-none text-white" href="/user"> Quản lý người dùng</a></p>
+    <p><i class="bi bi-cart-fill me-2"></i><a class="text-decoration-none text-white" href="/order"> Quản lý đơn hàng</a></p>
+    <p><i class="bi bi-chat-left-text-fill me-2"></i><a class="text-decoration-none text-white" href="/feedback"> Quản lý bình luận</a></p>
+    <hr>
+    <div class="text-center">
+      <a href="" class="btn btn-danger">Đăng xuất</a>
+    </div>
+  </div>
+  <div class="col-md-10 p-0">
+    <div class="shadow bg-danger text-white d-flex justify-content-between align-content-center p-3 pb-1">
+      <p>TRANG QUẢN TRỊ WEBSITE HPLSHOP</p>
+      <div><span>Admin</span><img class="rounded m-1 border border-1 border-white" width="30px" height="30px" src="https://lh3.googleusercontent.com/a/AAcHTtdsW-6i09Wa-XNKWjkAjv7vrId4EIbE5Ggj3W_rA6_-18Q=s576-c-no" alt=""></div>
+    </div>
+    <div class="row p-5">
+      <h4>SỬA SẢN PHẨM</h4>
+      <form (ngSubmit)="onSubmit()" [formGroup]="productForm">
+        <div class="card">
+          <div class="card-body">
+            <div class="form-group">
+              <label for="id">id</label>
+              <input type="text" name="id" id="id" formControlName="id"
+                class="form-control" placeholder="id" aria-describedby="idHelpId" readonly>
+              <small *ngIf="!productForm.get('name')?.valid && productForm.get('id')?.touched" id="idHelp" class="text-muted">
+                Tên sản phẩm là bắt buộc và ít nhất 6 ký tự
+              </small>
+            </div><br>
+
+            <div class="form-group">
+              <label for="name">Tên sản phẩm</label>
+              <input type="text" name="name" id="name" formControlName="name"
+                class="form-control" placeholder="Tên sản phẩm" aria-describedby="nameHelpId">
+              <small *ngIf="!productForm.get('name')?.valid && productForm.get('name')?.touched" id="nameHelp" class="text-muted">
+                Tên sản phẩm là bắt buộc và ít nhất 6 ký tự
+              </small>
+            </div><br>
+            <div class="form-group">
+              <label for="price">Giá</label>
+              <input type="text" id="price" formControlName="price" class="form-control" placeholder="Giá" aria-describedby="priceHelp">
+              <small *ngIf="!productForm.get('price')?.valid && productForm.get('price')?.touched" id="priceHelp" class="text-muted">
+                Giá là bắt buộc và phải là số
+              </small>
+            </div><br>
+            <div class="form-group">
+              <label for="categoryId">Danh mục</label>
+              <select id="categoryId" formControlName="categoryId" class="form-control" aria-describedby="categoryHelp">
+                <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
+              </select>
+              <small *ngIf="!productForm.get('categoryId')?.valid && productForm.get('categoryId')?.touched" id="categoryHelp" class="text-muted">
+                Danh mục là bắt buộc
+              </small>
+            </div><br>
+            <div class="form-group">
+              <label for="description">Mô tả</label>
+              <textarea id="description" formControlName="description" class="form-control" placeholder="Mô tả"></textarea>
+            </div>
+            <hr>
+            <label for="fileInput1">Upload Image</label>
+              <input id="fileInput1" name="img" class="form-control-file" type="file" (change)="onFileSelected($event)" />
+            <div class="form-group">
+              <button type="submit" class="btn btn-primary">Cập nhật</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

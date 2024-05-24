@@ -1,0 +1,53 @@
+<div class="row">
+    <div class="col-md-2 bg-dark text-white p-4 ">
+        <h3 class="text-center"><span class="text-danger">HPL</span><span>SHOP</span></h3>
+        <hr>
+        <p><i class="bi bi-pie-chart-fill me-2"></i><a class="text-decoration-none text-white" href="/statistic"> Quản lý thống kê</a></p>
+        <p><i class="bi bi-tag-fill me-2"></i><a class="text-decoration-none text-white" href="/category"> Quản lý danh mục</a></p>
+        <p><i class="bi bi-box-seam me-2"></i><a class="text-decoration-none text-white" href="/product"> Quản lý sản phẩm</a></p>
+        <p><i class="bi bi-people-fill me-2"></i><a class="text-decoration-none text-white" href="/user"> Quản lý người dùng</a></p>
+        <p><i class="bi bi-cart-fill me-2"></i><a class="text-decoration-none text-white" href="/order"> Quản lý đơn hàng</a></p>
+        <p><i class="bi bi-chat-left-text-fill me-2"></i><a class="text-decoration-none text-white" href="/feedback"> Quản lý bình luận</a></p>
+        <hr>
+        <div class="text-center">           
+             <a href="" class="btn btn-danger">Đăng xuất</a>
+        </div>
+    </div>
+    <div class="col-md-10 p-0">
+        <div class="shadow bg-danger text-white d-flex justify-content-between align-content-center  p-3 pb-1">
+            <p>TRANG QUẢN TRỊ WEBSITE HPLSHOP</p>
+            <div><span>Admin</span><img class="rounded m-1 border border-1 border-white" width="30px" height="30px" src="https://lh3.googleusercontent.com/a/AAcHTtdsW-6i09Wa-XNKWjkAjv7vrId4EIbE5Ggj3W_rA6_-18Q=s576-c-no" alt=""></div>
+        </div>
+        <div class="row p-5">
+            <h1>Quản lý danh mục</h1>
+            
+            <a [routerLink]="['/category-add']" routerLinkActive="router-link-active" class="btn btn-primary mb-3" style="width: 150px; margin-left: 1000px;"> Thêm danh mục</a>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Tên danh mục</th>
+                        <th>Ảnh</th>
+                        <th>Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let category of categories">
+                        <td>{{category.id}}</td>
+                        <td>{{category.name}}</td>
+                        <td><img [src]="'http://localhost:3000/images/' + category.img" alt="{{ category.name }}" width="100"></td>
+                        <td>
+                            <a [routerLink]="['/category-edit/', category.id]" routerLinkActive="router-link-active"  style="margin-right: 10px;" class="btn btn-warning">
+                                <i class="bi bi-pencil-square"></i> Sửa
+                            </a>
+
+                            <a href="javascript:void(0)" *ngIf="category.id" (click)="deleteCategory(category.id)" class="btn btn-danger">
+                                <i class="bi bi-trash3"></i> Xóa
+                              </a>
+                        </td>
+                    </tr>            
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

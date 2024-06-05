@@ -1,49 +1,49 @@
 <!-- Hero Section Begin -->
 <section class="hero">
-  <div class="hero__slider owl-carousel">
-      <img src="assets/img/hero/hero-1.jpg" alt=""><div class="hero__items set-bg">
-          <div class="container">
-              <div class="row">
-                  <div class="col-xl-5 col-lg-7 col-md-8">
-                      <div class="hero__text">
-                          <h6>Bộ sưu tập mùa hè</h6>
-                          <h2>Bộ sưu tập <br> Thu - Đông 2030</h2>
-                          <p>Một nhãn hiệu chuyên tạo ra các mặt hàng thiết yếu xa xỉ. Đạo đức được tạo ra với một sự kiên định
-                              cam kết chất lượng vượt trội.</p>
-                          <a href="shop.html" class="primary-btn">Mua ngay <span class="arrow_right"></span></a>
-                          <div class="hero__social">
-                              <a href="#"><i class="fa fa-facebook"></i></a>
-                              <a href="#"><i class="fa fa-twitter"></i></a>
-                              <a href="#"><i class="fa fa-pinterest"></i></a>
-                              <a href="#"><i class="fa fa-instagram"></i></a>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-          </div>
-      </div>
-      <img src="assets/img/hero/hero-2.jpg" alt=""><div class="hero__items set-bg">
-          <div class="container">
-              <div class="row">
-                  <div class="col-xl-5 col-lg-7 col-md-8">
-                      <div class="hero__text">
-                          <h6>Bộ sưu tập mùa hè</h6>
-                          <h2>Bộ sưu tập <br> Thu - Đông 2030</h2>
-                          <p>Một nhãn hiệu chuyên tạo ra các mặt hàng thiết yếu xa xỉ. Đạo đức được tạo ra với một sự kiên định
-                              cam kết chất lượng vượt trội.</p>
-                          <a href="shop.html" class="primary-btn">Mua ngay <span class="arrow_right"></span></a>
-                          <div class="hero__social">
-                              <a href="#"><i class="fa fa-facebook"></i></a>
-                              <a href="#"><i class="fa fa-twitter"></i></a>
-                              <a href="#"><i class="fa fa-pinterest"></i></a>
-                              <a href="#"><i class="fa fa-instagram"></i></a>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-          </div>
-      </div>
-  </div>
+    <div class="hero__slider owl-carousel">
+        <img src="./assets/malefashion-master/img/hero/hero-1.jpg" alt=""><div class="hero__items set-bg">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-5 col-lg-7 col-md-8">
+                        <div class="hero__text">
+                            <h6>Bộ sưu tập mùa hè</h6>
+                            <h2>Bộ sưu tập <br> Thu - Đông 2030</h2>
+                            <p>Một nhãn hiệu chuyên tạo ra các mặt hàng thiết yếu xa xỉ. Đạo đức được tạo ra với một sự kiên định
+                                cam kết chất lượng vượt trội.</p>
+                            <a href="shop.html" class="primary-btn">Mua ngay <span class="arrow_right"></span></a>
+                            <div class="hero__social">
+                                <a href="#"><i class="fa fa-facebook"></i></a>
+                                <a href="#"><i class="fa fa-twitter"></i></a>
+                                <a href="#"><i class="fa fa-pinterest"></i></a>
+                                <a href="#"><i class="fa fa-instagram"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <img src="./assets/malefashion-master/img/hero/hero-2.jpg" alt=""><div class="hero__items set-bg" >
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-5 col-lg-7 col-md-8">
+                        <div class="hero__text">
+                            <h6>Bộ sưu tập mùa hè</h6>
+                            <h2>Bộ sưu tập <br> Thu - Đông 2030</h2>
+                            <p>Một nhãn hiệu chuyên tạo ra các mặt hàng thiết yếu xa xỉ. Đạo đức được tạo ra với một sự kiên định
+                                cam kết chất lượng vượt trội.</p>
+                            <a href="shop.html" class="primary-btn">Mua ngay <span class="arrow_right"></span></a>
+                            <div class="hero__social">
+                                <a href="#"><i class="fa fa-facebook"></i></a>
+                                <a href="#"><i class="fa fa-twitter"></i></a>
+                                <a href="#"><i class="fa fa-pinterest"></i></a>
+                                <a href="#"><i class="fa fa-instagram"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
 <!-- Hero Section End -->
 
@@ -156,7 +156,7 @@
           <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix new-arrivals" *ngFor="let product of products">
               <div class="product__item">
                   <div [routerLink]="['/product-detail/' + product.id]" routerLinkActive="router-link-active" class="product__item__pic set-bg" data-setbg="">
-                    <img [src]="'http://localhost:3000/images/' + product.img" alt="{{ product.name }}" width="150">
+                    <img [src]="'http://localhost:3000/images/' + product.img" alt="{{ product.name }}" width="150" height="200px">
                       <span class="label">New</span>
                       <ul class="product__hover">
                           <li><a href="#"><img src="img/icon/heart.png" alt=""></a></li>

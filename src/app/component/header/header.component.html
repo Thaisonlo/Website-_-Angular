@@ -11,9 +11,11 @@
               <div class="col-lg-5 col-md-5">
                   <div class="header__top__right">
                       <div class="header__top__links">
-                          <a [routerLink]="['/login']" routerLinkActive="router-link-active"  >Đắng nhập</a>
-                          <a href="#">Hỏi đáp</a>   
+                          <a *ngIf="!isLogin" [routerLink]="['/login']" routerLinkActive="router-link-active">Đăng nhập</a>
+                          <a href="#">Hỏi đáp</a> 
+                            
                       </div>
+                      
                       <div class="header__top__hover">
                           <span>Vnd <i class="arrow_carrot-down"></i></span>
                           <ul>
@@ -22,6 +24,15 @@
                               <li>USD</li>
                           </ul>
                       </div>
+                      <li>
+                        <a class="header__top__hover" *ngIf="isLogin" style="color: #fff;">Xin chào {{ isLogin.fullName }}
+                        </a>
+                        <ul>
+                            <li><a *ngIf="isLogin" (click)="onLogout()" style="color: #fff;" href="">Đăng xuất</a></li>
+                            <li><a [routerLink]="['/my-account']" routerLinkActive="router-link-active"  *ngIf="isLogin" style="color: #fff;">Tài khoản</a></li>
+                        </ul>
+                        </li>
+                      
                   </div>
               </div>
           </div>
@@ -37,7 +48,7 @@
           <div class="col-lg-7 col-md-7">
               <nav class="header__menu mobile-menu">
                   <ul>
-                      <li class="active"><a [routerLink]="['/home']" routerLinkActive="router-link-active"  >Trang chủ</a></li>
+                      <li class="active"><a [routerLink]="['/home']" routerLinkActive="router-link-active">Trang chủ</a></li>
                       <li><a href="./shop.html">Cửa hàng</a></li>
                       <li><a href="#">Trang</a>
                           <ul class="dropdown">
@@ -45,9 +56,9 @@
                               <li><a href="./shopping-cart.html">Giỏ hàng</a></li>
                               <li><a href="./checkout.html">Thanh toán</a></li>
                               <li><a href="./blog-details.html">Chi tiết</a></li>
-                              <li><a [routerLink]="['category-list']" routerLinkActive="router-link-active" >Trang quản trị</a></li>
-                              <li><a [routerLink]="['product-list']" routerLinkActive="router-link-active" >Trang sản phẩm</a></li>
-
+                              <li><a *ngIf="isAdmin" [routerLink]="['category-list']" routerLinkActive="router-link-active" >Trang quản trị</a></li>
+                              <li><a *ngIf="isAdmin" [routerLink]="['product-list']" routerLinkActive="router-link-active" >Trang sản phẩm</a></li>
+                              <li><a *ngIf="isAdmin" [routerLink]="['user-list']" routerLinkActive="router-link-active" >Quản lý  người dùng</a></li>
                           </ul>
                       </li>
                       <li><a href="./blog.html">Tin tức</a></li>

@@ -25,29 +25,7 @@ function checkFileUpload(req, file, cb) {
 // Upload file
 let upload = multer({ storage: storage, fileFilter: checkFileUpload });
 
-// Trả về json danh sách sản phẩm
-
-// // Update product
-// router.put('/products/:id', async (req, res) => {
-//   try {
-//     const productId = req.params.id;
-
-//     const updatedProduct = {
-//       name: req.body.name,
-//       price: req.body.price,
-//       categoryId: req.body.categoryId,
-//       description: req.body.description
-//     };
-
-//     const result = await Product.findByIdAndUpdate(productId, updatedProduct, { new: true });
-
-//     res.status(200).json(result);
-//   } catch (error) {
-//     res.status(500).json({ message: error.message });
-//   }
-// });
-
-// Middleware for authentication
+// // Middleware for authentication
 function authenToken(req, res, next) {
   const authHeader = req.headers["authorization"];
   const token = authHeader && authHeader.split(" ")[1];
@@ -63,7 +41,7 @@ function authenToken(req, res, next) {
 // ---------------------------Products--------------------------------//
 
 // Get list of hot products
-router.get("/producthot", authenToken, async (req, res) => {
+router.get("/producthot", async (req, res) => {
   const db = await connectDb();
   const productCollection = db.collection("products");
   const product = await productCollection.find({ hot: 1 }).toArray();
@@ -377,7 +355,8 @@ router.delete("/categories/:id", async (req, res) => {
 // ---------------------------Users--------------------------------//
 
 // Get list of users
-router.get("/users", authenToken, async (req, res) => {
+router.get("/users", async (req, res) => {
+  //authenToken
   const db = await connectDb();
   const userCollection = db.collection("users");
   const users = await userCollection.find().toArray();
@@ -389,7 +368,7 @@ router.get("/users", authenToken, async (req, res) => {
 });
 
 // Get user by ID
-router.get("/users/:id", authenToken, async (req, res) => {
+router.get("/users/:id", async (req, res) => {
   const db = await connectDb();
   const userCollection = db.collection("users");
   const id = req.params.id;
@@ -402,7 +381,7 @@ router.get("/users/:id", authenToken, async (req, res) => {
 });
 
 // Delete user by ID
-router.delete("/users/:id", authenToken, async (req, res) => {
+router.delete("/users/:id", async (req, res) => {
   const db = await connectDb();
   const userCollection = db.collection("users");
   const id = req.params.id;
@@ -415,51 +394,151 @@ router.delete("/users/:id", authenToken, async (req, res) => {
 });
 
 // Login
-router.post("/login", async (req, res, next) => {
+router.post("/login", upload.single("img"), async (req, res, next) => {
   const { email, password } = req.body;
-  const db = await connectDb();
-  const userCollection = db.collection("users");
-  const user = await userCollection.findOne({ email });
-  if (!user) {
-    return res.status(401).json({ message: "Incorrect email or password." });
-  }
+  try {
+    const db = await connectDb();
+    const userCollection = db.collection("users");
+    const user = await userCollection.findOne({ email: email });
 
-  const isValidPassword = await bcrypt.compare(password, user.password);
-  if (!isValidPassword) {
-    return res.status(401).json({ message: "Incorrect email or password." });
+    if (user) {
+      if (bcrypt.compareSync(password, user.password)) {
+        const token = jwt.sign(
+          {
+            email: user.email,
+            // isAdmin: user.isAdmin, 
+            fullName: user.fullName,
+          },
+          "secretkey",
+          { expiresIn: "60s" }
+        );
+        res.status(200).json({
+          token: token,
+          email: email,
+          password: password,
+          isAdmin: user.isAdmin,
+          fullName: user.fullName
+        });
+      } else {
+        res.status(403).json({ message: "Email  mật khẩu không chính xác" });
+      }
+    } else {
+      res.status(403).json({ message: "Email hoặc mật khẩu không chính xác" });
+    }
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ message: "Lỗi máy chủ" }); // Server error response
   }
-
-  const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-    expiresIn: "1h",
-  });
-  res.status(200).json({ token });
 });
 
-// Register
-router.post("/register", async (req, res, next) => {
-  const { name, email, password } = req.body;
+//Register
+router.post("/register", upload.single("img"), async (req, res, next) => {
+  const { email, password, fullName } = req.body;
+  let img = req.file.originalname; // Get the file path
+  console.log(email);
+
   const db = await connectDb();
   const userCollection = db.collection("users");
 
-  const existingUser = await userCollection.findOne({ email });
-  if (existingUser) {
-    return res.status(409).json({ message: "Email already in use." });
+  try {
+    let user = await userCollection.findOne({ email: email });
+    console.log(user);
+
+    if (user) {
+      res.status(409).json({ message: "Email đã tồn tại" });
+    } else {
+      let lastUser = await userCollection
+        .find()
+        .sort({ id: -1 })
+        .limit(1)
+        .toArray();
+      let id = lastUser[0] ? lastUser[0].id + 1 : 1;
+      const salt = bcrypt.genSaltSync(10);
+      let hashPassword = bcrypt.hashSync(password, salt);
+      let newUser = {
+        id: id,
+        email,
+        password: hashPassword,
+        fullName,
+        img,
+        isAdmin: 0,
+      };
+
+      try {
+        let result = await userCollection.insertOne(newUser);
+        console.log(result);
+
+        // Generate JWT token
+        const token = jwt.sign(
+          { id: newUser.id, email: newUser.email, isAdmin: newUser.isAdmin },
+          "secretkey",
+          { expiresIn: "1h" }
+        );
+
+        res.status(200).json({ message: "Đăng ký thành công", token: token });
+      } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Lỗi khi thêm người dùng mới" });
+      }
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal Server Error" });
   }
+});
+// const jwt = require('jsonwebtoken');
+//  // Import bcrypt for password comparison
+// function authenToken(req, res, next) {
+//   const bearerHeader = req.headers['authorization'];
+//   if (typeof bearerHeader !== 'undefined') {
+//     const bearerToken = bearerHeader.split(' ')[1];
+//     req.token = bearerToken;
+//     jwt.verify(req.token, 'secretkey', (err, authData) => {
+//       if (err) {
+//         res.status(403).json({ message: "Không có quyền truy cập" });
+//       } else {
+//         req.authData = authData;
+//         next();
+//       }
+//     });
+//   } else {
+//     res.status(403).json({ message: "Không có quyền truy cập" });
+//   }
+// }
+// router.get('/some-protected-route', authenToken, (req, res) => {
+//   res.json({ message: "This is a protected route", user: req.authData });
+// });
 
-  const hashedPassword = await bcrypt.hash(password, 10);
-  const lastUser = await userCollection
-    .find()
-    .sort({ id: -1 })
-    .limit(1)
-    .toArray();
-  const id = lastUser[0] ? lastUser[0].id + 1 : 1;
-  const newUser = { id, name, email, password: hashedPassword };
-  await userCollection.insertOne(newUser);
+// Edit a user
+router.put("/users/:id", upload.single("img"), async (req, res) => {
+  try {
+    const id = req.params.id;
+    let img = "";
+    if (req.file) {
+      img = req.file.filename;
+    }
 
-  const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET, {
-    expiresIn: "1h",
-  });
-  res.status(201).json({ token });
+    const db = await connectDb();
+    const userCollection = db.collection("users");
+    const { fullName, email, isAdmin } = req.body;
+
+    const user = await userCollection.findOne({ id: parseInt(id) });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const editUser = { fullName, email, isAdmin };
+    if (img !== "") {
+      editUser.img = img;
+    }
+
+    await userCollection.updateOne({ id: parseInt(id) }, { $set: editUser });
+
+    res.status(200).json(editUser);
+  } catch (error) {
+    console.error("Error editing user:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
 });
 
 module.exports = router;

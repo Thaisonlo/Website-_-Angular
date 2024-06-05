@@ -15,17 +15,28 @@ import { ProductListComponent } from './component/product-list/product-list.comp
 import { ProductAddComponent } from './component/product-add/product-add.component';
 import { ProductEditComponent } from './component/product-edit/product-edit.component';
 import { ProductDetailComponent } from './component/product-detail/product-detail.component';
+import { RegisterComponent } from './component/register/register.component';
+import { UserListComponent } from './component/user-list/user-list.component';
+import { UserAddComponent } from './component/user-add/user-add.component';
+import { UserEditComponent } from './component/user-edit/user-edit.component';
+import { AuthGuard } from './auth/auth-guard';
+import { MyAccountComponent } from './component/my-account/my-account.component';
+import { AdminGuard } from './auth/admin-guard';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'category-list', component: CategoryListComponent },
-  { path: 'category-add', component: CategoryAddComponent },
-  { path: 'category-edit/:id', component: CategoryEditComponent },
-  { path: 'product-list', component: ProductListComponent },
-  { path: 'product-add', component: ProductAddComponent },
-  { path: 'product-edit/:id', component: ProductEditComponent },
+  { path: 'register', component: RegisterComponent },
+  { path: 'category-list', component: CategoryListComponent, canActivate: [AdminGuard] },
+  { path: 'category-add', component: CategoryAddComponent, canActivate: [AdminGuard] },
+  { path: 'category-edit/:id', component: CategoryEditComponent, canActivate: [AdminGuard] },
+  { path: 'product-list', component: ProductListComponent, canActivate: [AdminGuard] },
+  { path: 'product-add', component: ProductAddComponent, canActivate: [AdminGuard] },
+  { path: 'product-edit/:id', component: ProductEditComponent, canActivate: [AdminGuard] },
   { path: 'product-detail/:id', component: ProductDetailComponent },
+  { path: 'user-list', component: UserListComponent, canActivate: [AdminGuard] },
+  { path: 'user-edit/:id', component: UserEditComponent, canActivate: [AdminGuard] },
+  { path: 'my-account', component: MyAccountComponent, canActivate: [AuthGuard] },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
 ];
 
@@ -42,7 +53,12 @@ const routes: Routes = [
     ProductListComponent,
     ProductAddComponent,
     ProductEditComponent,
-    ProductDetailComponent
+    ProductDetailComponent,
+    RegisterComponent,
+    UserListComponent,
+    UserAddComponent,
+    UserEditComponent,
+    MyAccountComponent
   ],
 
   imports: [
